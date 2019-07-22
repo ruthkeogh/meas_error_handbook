@@ -1,4 +1,4 @@
-# meas_error_handbook
+# Measurement error correction methods applied to NHANES data
 
 Provides R code for performing analyses to correct for the impact of measurement error. The analyses are applied to example data from the
 Third National Health and Nutrition Examination Survey (NHANES III), which is provided in a csv file.
