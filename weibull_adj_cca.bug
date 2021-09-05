@@ -1,0 +1,33 @@
+model
+{
+
+for(i in 1:n) {
+  is.censored[i] ~ dinterval(t[i], c[i])
+  t[i] ~ dweib(r, exp(mu[i]))
+
+  mu[i]<-beta[1]+beta[2]*sbp[i]+beta[3]*sex[i]+beta[4]*age[i]+beta[5]*smoke[i]+beta[6]*diabetes[i]
+  
+  sbp[i] ~ dnorm(musbp[i],taux)
+  musbp[i]<-gamma[1]+gamma[2]*sex[i]+gamma[3]*age[i]+gamma[4]*smoke[i]+gamma[5]*diabetes[i]
+  
+  sbp1[i]~dnorm(sbp[i],tauu)
+  sbp2[i]~dnorm(sbp[i]+shift,tauu)
+
+}
+
+for (i in 1:6) {
+  beta[i] <- -r * log.scale[i]
+  log.scale[i] ~ dnorm(0, 1.0E-6)
+}
+r ~ dexp(0.001)
+
+gamma~dmnorm(gammamean,gammaprec)
+taux~dgamma(taux_alpha,taux_beta)
+sigmax<-pow(taux,-0.5)
+shift ~ dnorm(0,0.0001)
+
+tauu~dgamma(tauu_alpha,tauu_beta)
+sigmau<-pow(tauu,-0.5)
+
+} 
+
